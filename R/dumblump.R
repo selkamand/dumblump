@@ -3,12 +3,12 @@
 #'
 #' Lump a numeric variable into categorical groups using 'dumblump' algorithm. See details
 #'
-#' @param x
-#' @param threshold
-#' @param group_prefix
-#' @param group_sep
+#' @param x input vector (numeric)
+#' @param threshold if distance between a number and its nearest neighbour in the dataset is greater than or equal to 'threshold', they will be allocated to the same group (numeric)
+#' @param group_prefix group names take the form '<group_prefix><group_sep><group_number> (string)
+#' @param group_sep group names take the form '<group_prefix><group_sep><group_number> (string)
 #'
-#' @return
+#' @return character vecto
 #' @export
 #'
 #' @details
@@ -24,7 +24,7 @@
 #' explore clustering methods
 #'
 #' @examples
-#'
+#' dumblump(c(1, 1, 2, 5,5 , 6, 1, 12, 12))
 dumblump <- function(x, threshold = 3, group_prefix = "Group", group_sep = " "){
 
   x_order <- order(x)
