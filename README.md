@@ -1,0 +1,67 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# dumblump
+
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/dumblump)](https://CRAN.R-project.org/package=dumblump)
+[![R-CMD-check](https://github.com/selkamand/dumblump/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/selkamand/dumblump/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/selkamand/dumblump/branch/master/graph/badge.svg)](https://app.codecov.io/gh/selkamand/dumblump?branch=master)
+<!-- badges: end -->
+
+Lump a numeric variable into categorical groups using ‘dumblump’
+algorithm
+
+# The **dumblump** algorithm:
+
+1.  Sort numbers in ascending order
+2.  For each number, check its distance from the previous number (the
+    closest, lower number in dataset).
+3.  If distance \>= threshold, define a new group. If distance \<
+    threshold, ‘lump’ with the group of the previous number
+
+Disadvantages of this method 1. You can get numbers of substantially
+different scales in a single group. E.g. If you have a set of numbers 1,
+2, 3,4, 5, 6, 7 … 100000.
+
+These will all be classified as a single group unless theres a ‘break’
+of \> threshold somewhere along. If this is not what you want, explore
+clustering methods
+
+## Installation
+
+You can install the development version of dumblump like so:
+
+``` r
+#install.packages('remotes')
+remotes::install_github('selkamand/dumblump')
+```
+
+## Usage
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(dumblump)
+
+unlumped <- c(1, 1, 2, 5,5 , 6, 1, 12, 12)
+
+
+lumped <- dumblump(unlumped, threshold = 1)
+data.frame(lumped, unlumped)
+#>    lumped unlumped
+#> 1 Group 1        1
+#> 2 Group 1        1
+#> 3 Group 2        2
+#> 4 Group 3        5
+#> 5 Group 3        5
+#> 6 Group 4        6
+#> 7 Group 1        1
+#> 8 Group 5       12
+#> 9 Group 5       12
+```
